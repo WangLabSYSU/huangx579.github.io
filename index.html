@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>邮箱链接转换器</title>
+    <title>标签链接移除方案</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -13,136 +14,200 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            padding: 20px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
+            padding: 20px;
         }
         
         .container {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
         }
         
         header {
             text-align: center;
-            margin: 30px 0;
+            padding: 20px;
+            background: #2c3e50;
             color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .description {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            color: #ecf0f1;
             max-width: 800px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
+            margin: 0 auto;
         }
         
-        .content {
+        .comparison {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
-            justify-content: center;
         }
         
-        .original, .converted {
+        .card {
             flex: 1;
             min-width: 300px;
             background: white;
             border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
         
-        h2 {
-            color: #1a2a6c;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #fdbb2d;
+        .card-header {
+            background: #3498db;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .tags {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .tags i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+        
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        /* 原始链接样式 */
+        .original a {
+            display: inline-block;
+            margin-right: 10px;
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+        
+        .original a:hover {
+            color: #e74c3c;
+            text-decoration: underline;
+        }
+        
+        .original .links a:not(:last-child):after {
+            content: "/";
+            margin-left: 10px;
+            color: #95a5a6;
+            font-weight: normal;
+        }
+        
+        /* 修改后样式 */
+        .modified .tag {
+            display: inline-block;
+            margin-right: 10px;
+            color: #2c3e50;
+            font-weight: 500;
+            padding: 5px 0;
+        }
+        
+        .modified .tag:not(:last-child):after {
+            content: "/";
+            margin-left: 10px;
+            color: #95a5a6;
+            font-weight: normal;
         }
         
         .code-container {
-            background: #f8f9fa;
+            background: #2d3436;
+            color: #f5f6fa;
             border-radius: 8px;
-            padding: 15px;
-            overflow-x: auto;
-            margin: 15px 0;
+            overflow: hidden;
+            margin-top: 30px;
         }
         
-        pre {
-            white-space: pre-wrap;
-            line-height: 1.5;
-        }
-        
-        .explanation {
-            background: #e9ecef;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            line-height: 1.6;
-        }
-        
-        .credits {
-            margin-top: 40px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            padding: 20px;
-            width: 100%;
-            max-width: 800px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .credits .container {
+        .code-header {
+            background: #232a2d;
+            padding: 12px 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
         }
         
-        .copyright, .author {
-            margin: 10px 0;
+        .code-content {
+            padding: 20px;
+            overflow-x: auto;
         }
         
-        a {
-            color: #1a2a6c;
+        pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .comment {
+            color: #636e72;
+            font-style: italic;
+        }
+        
+        .tag {
+            color: #e17055;
+        }
+        
+        .attribute {
+            color: #81ecec;
+        }
+        
+        .value {
+            color: #fab1a0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
             text-decoration: none;
-            transition: color 0.3s;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
         }
         
-        a:hover {
-            color: #b21f1f;
-            text-decoration: underline;
-        }
-        
-        .mail-link {
-            color: #1a2a6c;
-            font-weight: 500;
-        }
-        
-        .highlight {
-            background: #fff3cd;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-weight: bold;
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         @media (max-width: 768px) {
-            .content {
+            .comparison {
                 flex-direction: column;
             }
             
-            .credits .container {
-                flex-direction: column;
-                text-align: center;
+            h1 {
+                font-size: 2rem;
             }
         }
     </style>
@@ -150,78 +215,108 @@
 <body>
     <div class="container">
         <header>
-            <h1>邮箱地址转mailto链接</h1>
-            <p class="description">将HTML中的纯文本邮箱地址转换为可点击的mailto链接，增强用户体验并防止爬虫抓取。</p>
+            <h1>标签链接移除方案</h1>
+            <p class="description">将标签链接转换为纯文本，同时保留斜杠分隔符的解决方案</p>
         </header>
         
-        <div class="content">
-            <div class="original">
-                <h2>原始代码</h2>
-                <p>下面是包含纯文本邮箱地址的HTML代码：</p>
-                <div class="code-container">
-                    <pre>&lt;div class="credits"&gt;
-    &lt;div class="container"&gt;
-        &lt;div class="copyright"&gt;
-            &lt;a href="https://github.com/Lednerb" target="_blank"&gt;
-                &copy; 2025 Wang Lab. wangjk@mail.sysu.edu.cn
-            &lt;/a&gt;
-            -
-            &lt;a href="https://lednerb.github.io/bilberry-hugo-theme/index.xml"&gt;rss&lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class="author"&gt;
-            &lt;a href="https://github.com/Lednerb/bilberry-hugo-theme/tree/v4.13.0"
-                target="_blank"&gt;Bilberry Hugo Theme v4.13.0&lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</pre>
-                </div>
-                <div class="explanation">
-                    <p>问题：邮箱地址 <span class="highlight">wangjk@mail.sysu.edu.cn</span> 是纯文本形式，用户无法直接点击发送邮件，同时也容易被爬虫抓取。</p>
+        <div class="comparison">
+            <div class="card">
+                <div class="card-header">原始效果（带链接）</div>
+                <div class="card-content">
+                    <div class="tags original">
+                        <i class="fa fa-tags"></i>
+                        <div class="links">
+                            <a href="https://lednerb.github.io/bilberry-hugo-theme/tags/support/">
+                                m<sup>6</sup>A RNA修饰
+                            </a>
+                            <a href="https://lednerb.github.io/bilberry-hugo-theme/tags/discussions/">
+                                深度学习
+                            </a>
+                            <a href="https://lednerb.github.io/bilberry-hugo-theme/tags/qa/">
+                                生物信息学算法开发
+                            </a>
+                        </div>
+                    </div>
+                    <p>在此版本中，标签是可点击的链接，带有下划线和颜色区分。</p>
                 </div>
             </div>
             
-            <div class="converted">
-                <h2>转换后代码</h2>
-                <p>下面是修改后的代码，邮箱已转换为mailto链接：</p>
-                <div class="code-container">
-                    <pre>&lt;div class="credits"&gt;
-    &lt;div class="container"&gt;
-        &lt;div class="copyright"&gt;
-            &lt;a href="https://github.com/Lednerb" target="_blank"&gt;
-                &copy; 2025 Wang Lab. &lt;/a&gt;
-            &lt;a href="mailto:wangjk@mail.sysu.edu.cn" class="mail-link"&gt;wangjk@mail.sysu.edu.cn&lt;/a&gt;
-            -
-            &lt;a href="https://lednerb.github.io/bilberry-hugo-theme/index.xml"&gt;rss&lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class="author"&gt;
-            &lt;a href="https://github.com/Lednerb/bilberry-hugo-theme/tree/v4.13.0"
-                target="_blank"&gt;Bilberry Hugo Theme v4.13.0&lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</pre>
-                </div>
-                <div class="explanation">
-                    <p>解决方案：将邮箱地址包裹在 <span class="highlight">&lt;a href="mailto:wangjk@mail.sysu.edu.cn"&gt;</span> 标签中，使其成为可点击的链接。</p>
+            <div class="card">
+                <div class="card-header">修改后效果（无链接）</div>
+                <div class="card-content">
+                    <div class="tags modified">
+                        <i class="fa fa-tags"></i>
+                        <div class="links">
+                            <span class="tag">m<sup>6</sup>A RNA修饰</span>
+                            <span class="tag">深度学习</span>
+                            <span class="tag">生物信息学算法开发</span>
+                        </div>
+                    </div>
+                    <p>在此版本中，标签已转换为纯文本，但斜杠分隔符仍然保留。</p>
+                    <button class="btn" id="applySolution">应用此解决方案</button>
                 </div>
             </div>
         </div>
         
-        <div class="credits">
-            <div class="container">
-                <div class="copyright">
-                    <a href="https://github.com/Lednerb" target="_blank">
-                        &copy; 2025 Wang Lab. 
-                    </a>
-                    <a href="mailto:wangjk@mail.sysu.edu.cn" class="mail-link">wangjk@mail.sysu.edu.cn</a>
-                    -
-                    <a href="https://lednerb.github.io/bilberry-hugo-theme/index.xml">rss</a>
-                </div>
-                <div class="author">
-                    <a href="https://github.com/Lednerb/bilberry-hugo-theme/tree/v4.13.0"
-                        target="_blank">Bilberry Hugo Theme v4.13.0</a>
-                </div>
+        <div class="code-container">
+            <div class="code-header">
+                <span>HTML & CSS 代码实现</span>
+            </div>
+            <div class="code-content">
+                <pre><code>&lt;div class="footer"&gt;
+    &lt;div class="tags"&gt;
+        &lt;i class="fa fa-tags"&gt;&lt;/i&gt;
+        &lt;div class="links"&gt;
+            <span class="comment">&lt;!-- 将a标签替换为span标签 --&gt;</span>
+            &lt;span class="tag"&gt;m&lt;sup&gt;6&lt;/sup&gt;A RNA修饰&lt;/span&gt;
+            &lt;span class="tag"&gt;深度学习&lt;/span&gt;
+            &lt;span class="tag"&gt;生物信息学算法开发&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+    <span class="comment">/* 标签样式 */</span>
+    .tags {
+        display: flex;
+        align-items: center;
+    }
+    
+    .tags i {
+        margin-right: 15px;
+        color: #7f8c8d;
+    }
+    
+    .links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    
+    .tag {
+        display: inline-block;
+        margin-right: 10px;
+        color: #2c3e50;
+        font-weight: 500;
+        padding: 5px 0;
+    }
+    
+    <span class="comment">/* 使用CSS伪元素添加斜杠分隔符 */</span>
+    .tag:not(:last-child):after {
+        content: "/";
+        margin-left: 10px;
+        color: #95a5a6;
+        font-weight: normal;
+    }
+&lt;/style&gt;</code></pre>
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('applySolution').addEventListener('click', function() {
+            alert('解决方案已应用！只需按照上述代码示例将a标签替换为span标签，并添加提供的CSS样式。');
+        });
+    </script>
 </body>
 </html>
