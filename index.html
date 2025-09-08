@@ -3,91 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>标签链接移除方案</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Box布局调整</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
             padding: 20px;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 20px;
-            background: #2c3e50;
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .description {
-            font-size: 1.1rem;
-            color: #ecf0f1;
             max-width: 800px;
             margin: 0 auto;
         }
         
-        .comparison {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-        
-        .card {
-            flex: 1;
-            min-width: 300px;
+        /* 通用box样式 */
+        article {
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
         
-        .card-header {
-            background: #3498db;
-            color: white;
+        .content {
+            padding: 20px;
+        }
+        
+        /* 第一个box样式 */
+        .status .content {
+            padding: 20px;
+        }
+        
+        /* 第二个box样式调整 */
+        .article {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .article .content {
+            flex: 1;
+        }
+        
+        .article-title {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        /* 标签样式 */
+        .footer {
+            background-color: #f8f9fa;
             padding: 15px 20px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        
-        .card-content {
-            padding: 25px;
+            border-top: 1px solid #eee;
         }
         
         .tags {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
         }
         
         .tags i {
             margin-right: 15px;
-            font-size: 1.2rem;
             color: #7f8c8d;
         }
         
@@ -97,226 +74,101 @@
             align-items: center;
         }
         
-        /* 原始链接样式 */
-        .original a {
-            display: inline-block;
-            margin-right: 10px;
-            color: #2980b9;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 0;
-        }
-        
-        .original a:hover {
-            color: #e74c3c;
-            text-decoration: underline;
-        }
-        
-        .original .links a:not(:last-child):after {
-            content: "/";
-            margin-left: 10px;
-            color: #95a5a6;
-            font-weight: normal;
-        }
-        
-        /* 修改后样式 */
-        .modified .tag {
-            display: inline-block;
-            margin-right: 10px;
-            color: #2c3e50;
-            font-weight: 500;
-            padding: 5px 0;
-        }
-        
-        .modified .tag:not(:last-child):after {
-            content: "/";
-            margin-left: 10px;
-            color: #95a5a6;
-            font-weight: normal;
-        }
-        
-        .code-container {
-            background: #2d3436;
-            color: #f5f6fa;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-top: 30px;
-        }
-        
-        .code-header {
-            background: #232a2d;
-            padding: 12px 20px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .code-content {
-            padding: 20px;
-            overflow-x: auto;
-        }
-        
-        pre {
-            margin: 0;
-            line-height: 1.5;
-        }
-        
-        .comment {
-            color: #636e72;
-            font-style: italic;
-        }
-        
         .tag {
-            color: #e17055;
-        }
-        
-        .attribute {
-            color: #81ecec;
-        }
-        
-        .value {
-            color: #fab1a0;
-        }
-        
-        .btn {
             display: inline-block;
-            background: #3498db;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
-            text-decoration: none;
+            margin-right: 10px;
+            color: black;
             font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
+            padding: 5px 0;
         }
         
-        .btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        /* 使用CSS伪元素添加斜杠分隔符 */
+        .tag:not(:last-child):after {
+            content: "/";
+            margin-left: 10px;
+            color: #95a5a6;
+            font-weight: normal;
         }
         
-        @media (max-width: 768px) {
-            .comparison {
-                flex-direction: column;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
+        sup {
+            vertical-align: super;
+            font-size: smaller;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>标签链接移除方案</h1>
-            <p class="description">将标签链接转换为纯文本，同时保留斜杠分隔符的解决方案</p>
-        </header>
-        
-        <div class="comparison">
-            <div class="card">
-                <div class="card-header">原始效果（带链接）</div>
-                <div class="card-content">
-                    <div class="tags original">
-                        <i class="fa fa-tags"></i>
-                        <div class="links">
-                            <a href="https://lednerb.github.io/bilberry-hugo-theme/tags/support/">
-                                m<sup>6</sup>A RNA修饰
-                            </a>
-                            <a href="https://lednerb.github.io/bilberry-hugo-theme/tags/discussions/">
-                                深度学习
-                            </a>
-                            <a href="https://lednerb.github.io/bilberry-hugo-theme/tags/qa/">
-                                生物信息学算法开发
-                            </a>
-                        </div>
-                    </div>
-                    <p>在此版本中，标签是可点击的链接，带有下划线和颜色区分。</p>
+    <!-- 第一个box -->
+    <article class="status">
+        <div class="content">
+            <p>
+                <!-- <b> -->
+                    王金凯教授是中山大学引进的教授，导师资格为博士生导师。
+                    2005年毕业于武汉大学生命科学学院，获得理学学士学位。
+                    2010年毕业于中国科学院昆明动物研究所，获得遗传学博士学位（师从宿兵研究员）。
+                    2010年至2016年分别在美国爱荷华大学（2010至2012年）和加州大学洛杉矶分校（2013至2016年）
+                    邢毅教授实验室从事生物信息学方向博士后研究。2016年获聘中山大学引进人才。
+                    2018年入选广东省珠江人才计划"青年拔尖人才"。
+                <!-- </b> -->
+            </p>
+        </div>
+    <!-- <div class="footer no-tags">
+            <div class="languages">
+                <i class="fa fa-language"></i>
+                <div class="links">
+                    <a href="https://lednerb.github.io/bilberry-hugo-theme/de/status/bilberry-theme-released/">
+                        de
+                    </a>
                 </div>
             </div>
-            
-            <div class="card">
-                <div class="card-header">修改后效果（无链接）</div>
-                <div class="card-content">
-                    <div class="tags modified">
-                        <i class="fa fa-tags"></i>
-                        <div class="links">
-                            <span class="tag">m<sup>6</sup>A RNA修饰</span>
-                            <span class="tag">深度学习</span>
-                            <span class="tag">生物信息学算法开发</span>
-                        </div>
-                    </div>
-                    <p>在此版本中，标签已转换为纯文本，但斜杠分隔符仍然保留。</p>
-                    <button class="btn" id="applySolution">应用此解决方案</button>
+        </div> -->
+    </article>
+
+    <!-- 第二个box -->
+    <article class="article">
+        <div class="content">
+            <h1 class="article-title">
+                <p>
+                    <b>
+                        实验室简介
+                    </b>
+                </p>
+            </h1>
+            <!-- <div class="meta">
+                <span class="date moment">
+                    2021-11-01
+                </span>
+                <span class="author">
+                    <a href="https://lednerb.github.io/bilberry-hugo-theme/author/lednerb/">
+                        Lednerb
+                    </a>
+                </span>
+            </div> -->
+            <p>
+                实验室成立以来，已经在<b>Molecular Cell</b>（2篇）、<b>Nature Chemical Biology</b>、
+                <b>Nature Communications</b>（2篇）及<b>Nucleic Acids Research</b>（2篇）等学术期刊上发表论文13篇，
+                除两篇综述论文外，其余11篇论文IF均高于10。
+            </p>
+            <p>
+                实验室主要研究兴趣是利用第二代以及第三代高通量测序技术结合生物信息学、
+                基因组学和分子生物学的方法开发m<sup>6</sup>A RNA修饰的检测技术和算法,
+                研究m<sup>6</sup>A RNA修饰的调控模式和机理，及其在干细胞生长、肿瘤进展等重大生理病理过程中的作用。
+            </p>
+            <p>
+                实验室采用"干湿结合"的方式开展基础医学研究，通过算法开发、实验技术和组学技术开发等手段，
+                从新的维度解析RNA修饰的模式，从新的角度提出前沿科学问题，
+                并通过严谨的生物化学实验和组学分析深入阐明科学问题。
+            </p>
+        </div>
+        <div class="footer">
+            <div class="tags">
+                <i class="fa fa-tags"></i>
+                <div class="links">
+                    <span class="tag">RNA修饰</span>
+                    <span class="tag">深度学习</span>
+                    <span class="tag">生物信息学算法开发</span>
                 </div>
             </div>
         </div>
-        
-        <div class="code-container">
-            <div class="code-header">
-                <span>HTML & CSS 代码实现</span>
-            </div>
-            <div class="code-content">
-                <pre><code>&lt;div class="footer"&gt;
-    &lt;div class="tags"&gt;
-        &lt;i class="fa fa-tags"&gt;&lt;/i&gt;
-        &lt;div class="links"&gt;
-            <span class="comment">&lt;!-- 将a标签替换为span标签 --&gt;</span>
-            &lt;span class="tag"&gt;m&lt;sup&gt;6&lt;/sup&gt;A RNA修饰&lt;/span&gt;
-            &lt;span class="tag"&gt;深度学习&lt;/span&gt;
-            &lt;span class="tag"&gt;生物信息学算法开发&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;style&gt;
-    <span class="comment">/* 标签样式 */</span>
-    .tags {
-        display: flex;
-        align-items: center;
-    }
-    
-    .tags i {
-        margin-right: 15px;
-        color: #7f8c8d;
-    }
-    
-    .links {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-    }
-    
-    .tag {
-        display: inline-block;
-        margin-right: 10px;
-        color: #2c3e50;
-        font-weight: 500;
-        padding: 5px 0;
-    }
-    
-    <span class="comment">/* 使用CSS伪元素添加斜杠分隔符 */</span>
-    .tag:not(:last-child):after {
-        content: "/";
-        margin-left: 10px;
-        color: #95a5a6;
-        font-weight: normal;
-    }
-&lt;/style&gt;</code></pre>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.getElementById('applySolution').addEventListener('click', function() {
-            alert('解决方案已应用！只需按照上述代码示例将a标签替换为span标签，并添加提供的CSS样式。');
-        });
-    </script>
+    </article>
 </body>
 </html>
