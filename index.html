@@ -3,172 +3,396 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Box布局调整</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>HTML中空格的表示方法</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f8f9fa;
+            background-color: #f5f7fa;
             padding: 20px;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
-        /* 通用box样式 */
-        article {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-        
-        .content {
+        header {
+            text-align: center;
+            margin-bottom: 40px;
             padding: 20px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
-        /* 第一个box样式 */
-        .status .content {
-            padding: 20px;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
         
-        /* 第二个box样式调整 */
-        .article {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .article .content {
-            flex: 1;
-        }
-        
-        .article-title {
-            margin-top: 0;
+        h2 {
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
             color: #2c3e50;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
         }
         
-        /* 标签样式 */
-        .footer {
+        h3 {
+            font-size: 1.3rem;
+            margin: 20px 0 10px;
+            color: #2980b9;
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .example {
             background-color: #f8f9fa;
-            padding: 15px 20px;
-            border-top: 1px solid #eee;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
         }
         
-        .tags {
-            display: flex;
-            align-items: center;
+        .visualization {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
         }
         
-        .tags i {
-            margin-right: 15px;
+        .usage {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .usage h4 {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        
+        .interactive {
+            background-color: #e7f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .interactive h3 {
+            color: #27ae60;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
             color: #7f8c8d;
         }
         
-        .links {
+        .method-title {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
+            gap: 10px;
         }
         
-        .tag {
-            display: inline-block;
-            margin-right: 10px;
-            color: black;
-            font-weight: 600;
-            padding: 5px 0;
-        }
-        
-        /* 使用CSS伪元素添加斜杠分隔符 */
-        .tag:not(:last-child):after {
-            content: "/";
-            margin-left: 10px;
-            color: #95a5a6;
-            font-weight: normal;
-        }
-        
-        sup {
-            vertical-align: super;
-            font-size: smaller;
+        .method-icon {
+            font-size: 1.5rem;
+            color: #3498db;
         }
     </style>
 </head>
 <body>
-    <!-- 第一个box -->
-    <article class="status">
-        <div class="content">
-            <p>
-                <!-- <b> -->
-                    王金凯教授是中山大学引进的教授，导师资格为博士生导师。
-                    2005年毕业于武汉大学生命科学学院，获得理学学士学位。
-                    2010年毕业于中国科学院昆明动物研究所，获得遗传学博士学位（师从宿兵研究员）。
-                    2010年至2016年分别在美国爱荷华大学（2010至2012年）和加州大学洛杉矶分校（2013至2016年）
-                    邢毅教授实验室从事生物信息学方向博士后研究。2016年获聘中山大学引进人才。
-                    2018年入选广东省珠江人才计划"青年拔尖人才"。
-                <!-- </b> -->
-            </p>
-        </div>
-    <!-- <div class="footer no-tags">
-            <div class="languages">
-                <i class="fa fa-language"></i>
-                <div class="links">
-                    <a href="https://lednerb.github.io/bilberry-hugo-theme/de/status/bilberry-theme-released/">
-                        de
-                    </a>
-                </div>
+    <header>
+        <h1>HTML中空格的表示方法</h1>
+        <p>详解各种空格表示方式及其应用场景</p>
+    </header>
+    
+    <div class="intro">
+        <p>在HTML中，由于浏览器会合并连续的空格字符，我们需要使用特定方法来表示和保留空格。</p>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="method-title">
+                <span class="method-icon">→</span>
+                <h2>普通空格 (Space)</h2>
             </div>
-        </div> -->
-    </article>
+            <p>最常用的空格字符，在键盘上按空格键输入。</p>
+            
+            <div class="example">
+                &lt;p&gt;这是一个 空格 示例&lt;/p&gt;
+            </div>
+            
+            <div class="visualization">
+这是一个 空格 示例
+            </div>
+            
+            <div class="usage">
+                <h4>使用场景</h4>
+                <p>单词间的普通间隔，浏览器会合并多个连续空格为一个。</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="method-title">
+                <span class="method-icon">→</span>
+                <h2>不换行空格 (&amp;nbsp;)</h2>
+            </div>
+            <p>HTML实体，表示一个不换行空格。</p>
+            
+            <div class="example">
+                &lt;p&gt;这是一个&amp;nbsp;不换行空格&amp;nbsp;示例&lt;/p&gt;
+            </div>
+            
+            <div class="visualization">
+这是一个 不换行空格 示例
+            </div>
+            
+            <div class="usage">
+                <h4>使用场景</h4>
+                <p>防止浏览器在空格处换行，保持特定词语在一起。</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="method-title">
+                <span class="method-icon">→</span>
+                <h2>多个连续空格 (&amp;ensp; &amp;emsp;)</h2>
+            </div>
+            <p>HTML实体，表示不同宽度的空格。</p>
+            
+            <div class="example">
+                &lt;p&gt;较窄空格&amp;ensp;示例&lt;/p&gt;
+                &lt;p&gt;较宽空格&amp;emsp;示例&lt;/p&gt;
+            </div>
+            
+            <div class="visualization">
+较窄空格 示例
+较宽空格 示例
+            </div>
+            
+            <div class="usage">
+                <h4>使用场景</h4>
+                <p>用于需要特定对齐或间距的排版场景。</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="method-title">
+                <span class="method-icon">→</span>
+                <h2>预格式化文本 (&lt;pre&gt;)</h2>
+            </div>
+            <p>使用pre标签保留文本中的空格和换行。</p>
+            
+            <div class="example">
+                &lt;pre&gt;
+                这    是
+                    预格式
+                化    文本
+                &lt;/pre&gt;
+            </div>
+            
+            <div class="visualization">
+<pre>
+这    是
+    预格式
+化    文本
+</pre>
+            </div>
+            
+            <div class="usage">
+                <h4>使用场景</h4>
+                <p>显示代码、诗歌或其他需要保留原始空格的文本。</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="method-title">
+                <span class="method-icon">→</span>
+                <h2>CSS white-space 属性</h2>
+            </div>
+            <p>使用CSS控制空格的显示方式。</p>
+            
+            <div class="example">
+                &lt;style&gt;
+                .preserve-space {
+                    white-space: pre-wrap;
+                }
+                &lt;/style&gt;
+                
+                &lt;p class="preserve-space"&gt;这    是
+                CSS     保留
+                空格    示例&lt;/p&gt;
+            </div>
+            
+            <div class="visualization" style="white-space: pre-wrap;">
+这    是
+CSS     保留
+空格    示例
+            </div>
+            
+            <div class="usage">
+                <h4>使用场景</h4>
+                <p>需要灵活控制文本中空格和换行行为的现代网页设计。</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="method-title">
+                <span class="method-icon">→</span>
+                <h2>零宽空格 (&amp;#8203;)</h2>
+            </div>
+            <p>不可见的空格字符，用于断字机会。</p>
+            
+            <div class="example">
+                &lt;p&gt;这是一个很&amp;#8203;长的&amp;#8203;单词示例&lt;/p&gt;
+            </div>
+            
+            <div class="visualization">
+这是一个很长的单词示例
+            </div>
+            
+            <div class="usage">
+                <h4>使用场景</h4>
+                <p>在长单词或URL中指定可能的换行位置，不影响视觉显示。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="interactive">
+        <h3>空格表示方法体验区</h3>
+        <p>在下面的文本框中输入文本，尝试使用不同的空格表示方法：</p>
+        
+        <textarea id="inputText" placeholder="在这里输入文本，尝试使用不同的空格..."></textarea>
+        
+        <div>
+            <button onclick="addNormalSpace()">添加普通空格</button>
+            <button onclick="addNbsp()">添加 &amp;nbsp;</button>
+            <button onclick="addEnsp()">添加 &amp;ensp;</button>
+            <button onclick="addEmsp()">添加 &amp;emsp;</button>
+        </div>
+        
+        <h4>渲染结果：</h4>
+        <div id="output" style="min-height: 80px; padding: 15px; border: 1px dashed #ccc; border-radius: 5px; margin-top: 10px;"></div>
+    </div>
+    
+    <div class="note">
+        <h3>重要提示</h3>
+        <p>1. 浏览器默认会合并连续的空格字符，只显示为一个空格。</p>
+        <p>2. 使用CSS的white-space属性可以控制空格的处理方式。</p>
+        <p>3. 在响应式设计中，谨慎使用固定宽度的空格(&amp;ensp;, &amp;emsp;)，因为它们可能在不同屏幕尺寸上造成布局问题。</p>
+    </div>
+    
+    <footer>
+        <p>© 2023 HTML空格表示指南 | 网页设计与开发资源</p>
+    </footer>
 
-    <!-- 第二个box -->
-    <article class="article">
-        <div class="content">
-            <h1 class="article-title">
-                <p>
-                    <b>
-                        实验室简介
-                    </b>
-                </p>
-            </h1>
-            <!-- <div class="meta">
-                <span class="date moment">
-                    2021-11-01
-                </span>
-                <span class="author">
-                    <a href="https://lednerb.github.io/bilberry-hugo-theme/author/lednerb/">
-                        Lednerb
-                    </a>
-                </span>
-            </div> -->
-            <p>
-                实验室成立以来，已经在<b>Molecular Cell</b>（2篇）、<b>Nature Chemical Biology</b>、
-                <b>Nature Communications</b>（2篇）及<b>Nucleic Acids Research</b>（2篇）等学术期刊上发表论文13篇，
-                除两篇综述论文外，其余11篇论文IF均高于10。
-            </p>
-            <p>
-                实验室主要研究兴趣是利用第二代以及第三代高通量测序技术结合生物信息学、
-                基因组学和分子生物学的方法开发m<sup>6</sup>A RNA修饰的检测技术和算法,
-                研究m<sup>6</sup>A RNA修饰的调控模式和机理，及其在干细胞生长、肿瘤进展等重大生理病理过程中的作用。
-            </p>
-            <p>
-                实验室采用"干湿结合"的方式开展基础医学研究，通过算法开发、实验技术和组学技术开发等手段，
-                从新的维度解析RNA修饰的模式，从新的角度提出前沿科学问题，
-                并通过严谨的生物化学实验和组学分析深入阐明科学问题。
-            </p>
-        </div>
-        <div class="footer">
-            <div class="tags">
-                <i class="fa fa-tags"></i>
-                <div class="links">
-                    <span class="tag">RNA修饰</span>
-                    <span class="tag">深度学习</span>
-                    <span class="tag">生物信息学算法开发</span>
-                </div>
-            </div>
-        </div>
-    </article>
+    <script>
+        const inputText = document.getElementById('inputText');
+        const output = document.getElementById('output');
+        
+        function updateOutput() {
+            output.innerHTML = inputText.value;
+        }
+        
+        function addNormalSpace() {
+            inputText.value += ' ';
+            updateOutput();
+        }
+        
+        function addNbsp() {
+            inputText.value += '\u00A0';
+            updateOutput();
+        }
+        
+        function addEnsp() {
+            inputText.value += '\u2002';
+            updateOutput();
+        }
+        
+        function addEmsp() {
+            inputText.value += '\u2003';
+            updateOutput();
+        }
+        
+        inputText.addEventListener('input', updateOutput);
+        
+        // 初始化
+        inputText.value = '尝试不同的空格表示方法';
+        updateOutput();
+    </script>
 </body>
 </html>
